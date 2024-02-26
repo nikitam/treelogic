@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLogic.Core", "TreeLogic.Core\TreeLogic.Core.csproj", "{5FC10A97-F6C4-470F-B524-62ABE2DC4814}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleApp", "ExampleApp\ExampleApp.csproj", "{82364348-537E-48CA-86F9-98BA882EEF03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LIC", "LIC", "{29F34E20-53DA-46FB-8CF3-36670562DD1A}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FC10A97-F6C4-470F-B524-62ABE2DC4814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC10A97-F6C4-470F-B524-62ABE2DC4814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC10A97-F6C4-470F-B524-62ABE2DC4814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC10A97-F6C4-470F-B524-62ABE2DC4814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82364348-537E-48CA-86F9-98BA882EEF03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82364348-537E-48CA-86F9-98BA882EEF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82364348-537E-48CA-86F9-98BA882EEF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82364348-537E-48CA-86F9-98BA882EEF03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
