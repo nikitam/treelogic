@@ -1,6 +1,14 @@
 namespace TreeLogic.Core;
 
-public class RoutineHandler
+public abstract class RoutineHandler
 {
-	
+	public virtual void PrepareRoutine(Routine r, RoutineEnvironment re)
+	{
+		
+	}
+
+	public virtual void ExecuteRoutine(Routine r, RoutineEnvironment re)
+	{
+		
+	}
 }
