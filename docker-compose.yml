@@ -1,0 +1,6 @@
+﻿services:
+  treelogic.processing:
+    image: treelogic.processing
+    build:
+      context: .
+      dockerfile: TreeLogic.Processing/Dockerfile

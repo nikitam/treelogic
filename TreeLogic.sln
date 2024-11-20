@@ -1,12 +1,36 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+#
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLogic.Core", "TreeLogic.Core\TreeLogic.Core.csproj", "{5FC10A97-F6C4-470F-B524-62ABE2DC4814}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleApp", "ExampleApp\ExampleApp.csproj", "{82364348-537E-48CA-86F9-98BA882EEF03}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LIC", "LIC", "{29F34E20-53DA-46FB-8CF3-36670562DD1A}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLogic.Core.Tests", "TreeLogic.Core.Tests\TreeLogic.Core.Tests.csproj", "{28431E9E-031C-4F77-B1F0-CE6E383C5DF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLogic.Core.Data", "TreeLogic.Core.Data\TreeLogic.Core.Data.csproj", "{281896A8-9D97-49D1-9898-DDB10016CCA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLogic.Core.Data.Tests", "TreeLogic.Core.Data.Tests\TreeLogic.Core.Data.Tests.csproj", "{D00FC6D7-23DC-490D-A18B-605CFFC6A96F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLogic.Core.Logging", "TreeLogic.Core.Logging\TreeLogic.Core.Logging.csproj", "{AE373E71-17C3-4C12-8957-924815EC80BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{17F3DCB0-7BDB-45AD-A3D9-286F4477DFE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLogic.Core.Logging.Serilog", "TreeLogic.Core.Logging.Serilog\TreeLogic.Core.Logging.Serilog.csproj", "{CEDAE9F1-D9DB-46CD-877C-3DE7956A590B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{369DCC0F-41E3-4CD5-B1C2-FE1953F92A57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Processing", "Processing", "{E04C6B05-5441-4DC2-8E69-A51B1A8018C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataProcessing", "DataProcessing", "{96A0FA9C-B3A0-4CE3-80F4-E3AE0525FE37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLogic.Processing", "TreeLogic.Processing\TreeLogic.Processing.csproj", "{8978280C-AFC7-4224-861B-AC137995680A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{742F9EE7-527B-4DAC-B001-6FCAD4256818}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Global
@@ -19,9 +43,35 @@ Global
 		{5FC10A97-F6C4-470F-B524-62ABE2DC4814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FC10A97-F6C4-470F-B524-62ABE2DC4814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FC10A97-F6C4-470F-B524-62ABE2DC4814}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82364348-537E-48CA-86F9-98BA882EEF03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82364348-537E-48CA-86F9-98BA882EEF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82364348-537E-48CA-86F9-98BA882EEF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82364348-537E-48CA-86F9-98BA882EEF03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28431E9E-031C-4F77-B1F0-CE6E383C5DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28431E9E-031C-4F77-B1F0-CE6E383C5DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28431E9E-031C-4F77-B1F0-CE6E383C5DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28431E9E-031C-4F77-B1F0-CE6E383C5DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{281896A8-9D97-49D1-9898-DDB10016CCA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{281896A8-9D97-49D1-9898-DDB10016CCA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{281896A8-9D97-49D1-9898-DDB10016CCA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{281896A8-9D97-49D1-9898-DDB10016CCA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D00FC6D7-23DC-490D-A18B-605CFFC6A96F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D00FC6D7-23DC-490D-A18B-605CFFC6A96F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D00FC6D7-23DC-490D-A18B-605CFFC6A96F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D00FC6D7-23DC-490D-A18B-605CFFC6A96F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE373E71-17C3-4C12-8957-924815EC80BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE373E71-17C3-4C12-8957-924815EC80BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE373E71-17C3-4C12-8957-924815EC80BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE373E71-17C3-4C12-8957-924815EC80BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEDAE9F1-D9DB-46CD-877C-3DE7956A590B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEDAE9F1-D9DB-46CD-877C-3DE7956A590B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEDAE9F1-D9DB-46CD-877C-3DE7956A590B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEDAE9F1-D9DB-46CD-877C-3DE7956A590B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8978280C-AFC7-4224-861B-AC137995680A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8978280C-AFC7-4224-861B-AC137995680A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8978280C-AFC7-4224-861B-AC137995680A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8978280C-AFC7-4224-861B-AC137995680A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AE373E71-17C3-4C12-8957-924815EC80BB} = {17F3DCB0-7BDB-45AD-A3D9-286F4477DFE2}
+		{CEDAE9F1-D9DB-46CD-877C-3DE7956A590B} = {17F3DCB0-7BDB-45AD-A3D9-286F4477DFE2}
+		{5FC10A97-F6C4-470F-B524-62ABE2DC4814} = {369DCC0F-41E3-4CD5-B1C2-FE1953F92A57}
+		{8978280C-AFC7-4224-861B-AC137995680A} = {E04C6B05-5441-4DC2-8E69-A51B1A8018C6}
 	EndGlobalSection
 EndGlobal
