@@ -14,30 +14,24 @@
    limitations under the License.
 */
 
+using Microsoft.Extensions.DependencyInjection;
+using TreeLogic.Core.Abstractions;
+
 namespace TreeLogic.Core;
 
-public class RoutineEnvironment
+public class RoutineProvider: IRoutineProvider
 {
-
-	public RoutineEnvironment(Routine r)
+	private readonly IServiceProvider _serviceProvider;
+	
+	public RoutineProvider(IServiceProvider sp)
 	{
-		TransactionalRoutines = new Dictionary<string, List<TransactionalRoutine>>();
-		InitialRoutine = r;
+		_serviceProvider = sp;
 	}
 	
-	public Routine InitialRoutine { get; }
-	
-	internal Dictionary<string, List<TransactionalRoutine>> TransactionalRoutines { get; }
-
-	public void AddTransactionalRoutine(TransactionalRoutine routine)
+	public T GetRoutine<T>(object routineOperand) where T : Routine
 	{
-		if (TransactionalRoutines.TryGetValue(routine.TransactionType, out var transactionalRoutines))
-		{
-			transactionalRoutines.Add(routine);
-		}
-		else
-		{
-			TransactionalRoutines.Add(routine.TransactionType, new List<TransactionalRoutine> { routine });
-		}
+		var routine = ActivatorUtilities.GetServiceOrCreateInstance<T>(_serviceProvider);
+		routine.RoutineOperand = routineOperand;
+		return routine;
 	}
 }

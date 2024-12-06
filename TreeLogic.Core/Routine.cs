@@ -16,12 +16,7 @@
 
 namespace TreeLogic.Core;
 
-public interface IRoutine
-{
-	Guid RoutineId { get; }
-	object RoutineOperand { get; }
-}
-public abstract class Routine: IRoutine
+public abstract class Routine
 {
 	private List<Routine> _childRoutines;
 
@@ -40,12 +35,18 @@ public abstract class Routine: IRoutine
 		}
 	}
 
-	public void AddChildRoutine(Routine routine)
+	public void AddChildRoutine(Routine routine, RoutineEnvironment re)
 	{
 		_childRoutines.Add(routine);
 		routine.ParentRoutine = this;
+
+		if (routine is TransactionalRoutine transactionalRoutine)
+		{
+			re.AddTransactionalRoutine(transactionalRoutine);
+		}
 	}
 
-	public Guid RoutineId { get; }
-	public object RoutineOperand { get; }
+	public abstract StageRoutineResult Prepare(RoutineEnvironment re);
+
+	public object RoutineOperand { get; internal set; }
 }

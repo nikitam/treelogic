@@ -16,28 +16,16 @@
 
 namespace TreeLogic.Core;
 
-public class RoutineEnvironment
+public class StageRoutineResult
 {
-
-	public RoutineEnvironment(Routine r)
-	{
-		TransactionalRoutines = new Dictionary<string, List<TransactionalRoutine>>();
-		InitialRoutine = r;
-	}
+	public object Result { get; set; }
 	
-	public Routine InitialRoutine { get; }
-	
-	internal Dictionary<string, List<TransactionalRoutine>> TransactionalRoutines { get; }
+	public Exception Exception { get; set; }
+}
 
-	public void AddTransactionalRoutine(TransactionalRoutine routine)
-	{
-		if (TransactionalRoutines.TryGetValue(routine.TransactionType, out var transactionalRoutines))
-		{
-			transactionalRoutines.Add(routine);
-		}
-		else
-		{
-			TransactionalRoutines.Add(routine.TransactionType, new List<TransactionalRoutine> { routine });
-		}
-	}
+public class RoutineResult
+{
+	public StageRoutineResult PrepareResult { get; set; }
+	
+	public StageRoutineResult ExecuteResult { get; set; }
 }

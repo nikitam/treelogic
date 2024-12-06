@@ -1,0 +1,6 @@
+@TreeLogic.Processing_HostAddress = http://localhost:5117
+
+GET {{TreeLogic.Processing_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

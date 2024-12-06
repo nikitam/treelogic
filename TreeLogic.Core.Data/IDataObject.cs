@@ -18,5 +18,5 @@ namespace TreeLogic.Core.Data;
 
 public interface IDataObject
 {
-    bool IsNew {get;}
+    bool IsNew { get; }
 }
