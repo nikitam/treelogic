@@ -18,5 +18,7 @@ namespace TreeLogic.Core.Abstractions;
 
 public interface ITransactionProvider
 {
-	ITransaction CreateTransaction(string transactionType);
+	ITransactionEnvironment CreateTransactionEnvironment();
+	
+	ITransaction CreateTransaction(string transactionType, ITransactionEnvironment transactionEnvironment);
 }

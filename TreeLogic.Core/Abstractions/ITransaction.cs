@@ -23,4 +23,6 @@ public interface ITransaction
 	void Commit();
 	
 	void Rollback();
+	
+	ITransactionEnvironment Environment { get; }
 }

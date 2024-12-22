@@ -21,8 +21,12 @@ namespace TreeLogic.Core;
 
 public static class Module
 {
-	public static void UseTreeLogic(this IServiceCollection serviceCollection)
+	public static void UseTreeLogic(this IServiceCollection serviceCollection, Action<TransactionProviderManager> registerProviders)
 	{
 		serviceCollection.AddSingleton<IRoutineProvider, RoutineProvider>();
+		
+		var providerManager = new TransactionProviderManager();
+		registerProviders(providerManager);
+		serviceCollection.AddSingleton(providerManager);
 	}
 }

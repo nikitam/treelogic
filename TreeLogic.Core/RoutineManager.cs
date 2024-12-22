@@ -26,12 +26,14 @@ public interface IRoutineManager
 public class RoutineManager: IRoutineManager
 {
 	private ITransactionRoutineComparerProvider _transactionRoutineComparerProvider;
-	private ITransactionProvider _transactionProvider;
+	private TransactionProviderManager _transactionProviderManager;
 	private IRoutineProvider _routineProvider;
 
-	public RoutineManager(IRoutineProvider rp)
+	public RoutineManager(IRoutineProvider rp, TransactionProviderManager tpm, ITransactionRoutineComparerProvider trp)
 	{
 		_routineProvider = rp;
+		_transactionProviderManager = tpm;
+		_transactionRoutineComparerProvider = trp;
 	}
 
 	public RoutineResult Go<T>(object operand) where T: Routine
@@ -79,7 +81,12 @@ public class RoutineManager: IRoutineManager
 			var comparer = _transactionRoutineComparerProvider.GetComparer(pair.Key);
 			pair.Value.Sort(comparer);
 
-			var transaction = _transactionProvider.CreateTransaction(pair.Key);
+			var transactionProvider = _transactionProviderManager.GetProvider(pair.Key);
+
+			var transactionEnvironment = transactionProvider.CreateTransactionEnvironment();
+			transactionEnvironment.OpenTransactionEnvironment();
+
+			var transaction = transactionProvider.CreateTransaction(pair.Key, transactionEnvironment);
 			
 			transaction.Begin();
 			transactionList.Add(transaction);
@@ -93,6 +100,8 @@ public class RoutineManager: IRoutineManager
 		foreach (var transaction in transactionList)
 		{
 			transaction.Commit();
+			
+			transaction.Environment.CloseTransactionEnvironment();
 		}
 	}
 }
