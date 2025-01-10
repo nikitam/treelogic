@@ -1,4 +1,5 @@
 using TreeLogic.Core;
+using TreeLogic.Core.Data.Postgres;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.UseTreeLogic(tm => tm.RegisterTransactionProvider("data", null));
+builder.Services.AddTreeLogic().WithPostgres("cs");
+
+
 
 var app = builder.Build();
 
@@ -36,6 +39,11 @@ app.MapGet("/weatherforecast", () =>
 		return forecast;
 	})
 	.WithName("GetWeatherForecast");
+
+app.MapPost("/exec", async context =>
+{
+	await context.Response.WriteAsync("DONE");
+});
 
 app.Run();
 

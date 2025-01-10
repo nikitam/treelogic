@@ -2,6 +2,7 @@ namespace TreeLogic.Core.Data;
 
 public abstract class DataRoutine: TransactionalRoutine
 {
+	public const string TransactionTypeConst = "DB";
 	protected void ValidateOperand()
 	{
 		
@@ -21,7 +22,7 @@ public abstract class DataRoutine: TransactionalRoutine
 	{
 		get
 		{
-			return "DB";
+			return DataRoutine.TransactionTypeConst;
 		}
 	}
 }

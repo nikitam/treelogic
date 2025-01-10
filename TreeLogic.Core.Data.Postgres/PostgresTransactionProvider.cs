@@ -14,20 +14,24 @@
    limitations under the License.
 */
 
-using Microsoft.Extensions.DependencyInjection;
 using TreeLogic.Core.Abstractions;
 
-namespace TreeLogic.Core;
+namespace TreeLogic.Core.Data.Postgres;
 
-public static class Module
+public class PostgresTransactionProvider: ITransactionProvider
 {
-	public static IServiceCollection AddTreeLogic(this IServiceCollection serviceCollection)
+	private readonly string _connectionString;
+	public PostgresTransactionProvider(string cs)
 	{
-		serviceCollection.AddSingleton<IRoutineProvider, RoutineProvider>();
-		
-		var providerManager = new TransactionProviderManager();
-		serviceCollection.AddSingleton(providerManager);
+		_connectionString = cs;
+	}
+	public ITransactionEnvironment CreateTransactionEnvironment()
+	{
+		return new PostgresTransactionEnvironment(_connectionString);
+	}
 
-		return serviceCollection;
+	public ITransaction CreateTransaction(string transactionType, ITransactionEnvironment transactionEnvironment)
+	{
+		return new PostgresTransaction((PostgresTransactionEnvironment)transactionEnvironment);
 	}
 }

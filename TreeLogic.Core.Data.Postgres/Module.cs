@@ -17,17 +17,16 @@
 using Microsoft.Extensions.DependencyInjection;
 using TreeLogic.Core.Abstractions;
 
-namespace TreeLogic.Core;
+namespace TreeLogic.Core.Data.Postgres;
 
 public static class Module
 {
-	public static IServiceCollection AddTreeLogic(this IServiceCollection serviceCollection)
+	public static IServiceCollection WithPostgres(this IServiceCollection serviceCollection, string connectionString)
 	{
-		serviceCollection.AddSingleton<IRoutineProvider, RoutineProvider>();
+		var sp = serviceCollection.BuildServiceProvider();
+		var tm = sp.GetService<TransactionProviderManager>();
+		tm.RegisterTransactionProvider(DataRoutine.TransactionTypeConst, new PostgresTransactionProvider(connectionString));
 		
-		var providerManager = new TransactionProviderManager();
-		serviceCollection.AddSingleton(providerManager);
-
 		return serviceCollection;
 	}
 }

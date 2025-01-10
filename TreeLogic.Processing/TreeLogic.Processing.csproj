@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TreeLogic.Core.Data.Postgres\TreeLogic.Core.Data.Postgres.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data\TreeLogic.Core.Data.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Logging.Serilog\TreeLogic.Core.Logging.Serilog.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Logging\TreeLogic.Core.Logging.csproj" />

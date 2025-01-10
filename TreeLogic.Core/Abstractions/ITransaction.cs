@@ -16,7 +16,7 @@
 
 namespace TreeLogic.Core.Abstractions;
 
-public interface ITransaction
+public interface ITransaction: IDisposable
 {
 	void Begin();
 	

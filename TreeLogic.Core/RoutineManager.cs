@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using Microsoft.Extensions.DependencyInjection;
 using TreeLogic.Core.Abstractions;
 
 namespace TreeLogic.Core;
@@ -102,6 +101,9 @@ public class RoutineManager: IRoutineManager
 			transaction.Commit();
 			
 			transaction.Environment.CloseTransactionEnvironment();
+			
+			transaction.Dispose();
+			transaction.Environment.Dispose();
 		}
 	}
 }

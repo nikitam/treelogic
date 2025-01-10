@@ -1,6 +1,6 @@
 namespace TreeLogic.Core.Abstractions;
 
-public interface ITransactionEnvironment
+public interface ITransactionEnvironment: IDisposable
 {
 	void OpenTransactionEnvironment();
 	
