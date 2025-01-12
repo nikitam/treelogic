@@ -21,6 +21,8 @@ namespace TreeLogic.Core;
 public interface IRoutineManager
 {
 	RoutineResult Go<T>(object operand) where T : Routine;
+	
+	RoutineResult Go (Routine routine);
 }
 public class RoutineManager: IRoutineManager
 {
@@ -37,9 +39,9 @@ public class RoutineManager: IRoutineManager
 
 	public RoutineResult Go<T>(object operand) where T: Routine
 	{
-		return InternalGo(_routineProvider.GetRoutine<T>(operand));
+		return Go(_routineProvider.GetRoutine<T>(operand));
 	}
-	internal RoutineResult InternalGo(Routine routine)
+	public RoutineResult Go(Routine routine)
 	{
 		var routineResult = new RoutineResult();
 		var routineEnvironment = new RoutineEnvironment(routine);

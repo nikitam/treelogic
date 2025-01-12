@@ -24,9 +24,15 @@ public static class Module
 	public static IServiceCollection AddTreeLogic(this IServiceCollection serviceCollection)
 	{
 		serviceCollection.AddSingleton<IRoutineProvider, RoutineProvider>();
-		
-		var providerManager = new TransactionProviderManager();
-		serviceCollection.AddSingleton(providerManager);
+		serviceCollection.AddSingleton<ITransactionProviderManager>(new TransactionProviderManager());
+
+		serviceCollection.AddSingleton<IRoutineManager>(sp =>
+		{
+			var routineProvider = sp.GetRequiredService<IRoutineProvider>();
+			var transactionProviderManager = sp.GetRequiredService<TransactionProviderManager>();
+			var transactionRoutineComparerProvider = sp.GetRequiredService<ITransactionRoutineComparerProvider>();
+			return new RoutineManager(routineProvider, transactionProviderManager, transactionRoutineComparerProvider);
+		});
 
 		return serviceCollection;
 	}

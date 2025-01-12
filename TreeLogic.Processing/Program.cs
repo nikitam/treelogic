@@ -1,5 +1,7 @@
 using TreeLogic.Core;
 using TreeLogic.Core.Data.Postgres;
+using TreeLogic.Core.Services;
+using TreeLogic.Processing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddTreeLogic().WithPostgres("cs");
+builder.Services.AddTreeLogic().WithProcessing(new RoutineProcessingServiceOptions
+{
+	ThreadCount = 2
+}).WithPostgres("cs");
 
-
+builder.Host.ConfigureServices(services =>
+{
+	services.AddHostedService<RoutineProcessingService>();
+});
 
 var app = builder.Build();
 

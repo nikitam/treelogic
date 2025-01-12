@@ -2,7 +2,7 @@ using TreeLogic.Core.Abstractions;
 
 namespace TreeLogic.Core;
 
-public class TransactionProviderManager
+public class TransactionProviderManager: ITransactionProviderManager
 {
 	private Dictionary<string, ITransactionProvider> _transactionProviders;
 
