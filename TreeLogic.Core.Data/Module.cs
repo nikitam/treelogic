@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Nikita Mulyukin <nmulyukin@gmail.com>
+   Copyright 2025 Nikita Mulyukin <nmulyukin@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,15 +17,15 @@
 using Microsoft.Extensions.DependencyInjection;
 using TreeLogic.Core.Abstractions;
 
-namespace TreeLogic.Core.Data.Postgres;
+namespace TreeLogic.Core.Data;
 
 public static class Module
 {
-	public static IServiceCollection WithPostgres(this IServiceCollection serviceCollection, string connectionString)
+	public static IServiceCollection WithData(this IServiceCollection serviceCollection)
 	{
 		var sp = serviceCollection.BuildServiceProvider();
-		var tm = sp.GetService<ITransactionProviderManager>();
-		tm.RegisterTransactionProvider(DataRoutine.TransactionTypeConst, new PostgresTransactionProvider(connectionString));
+		var comparerManager = sp.GetService<ITransactionalRoutineComparerManager>();
+		comparerManager.RegisterTransactionRoutineComparer(DataRoutine.TransactionTypeConst, new TransactionalRoutineComparer());
 		
 		return serviceCollection;
 	}

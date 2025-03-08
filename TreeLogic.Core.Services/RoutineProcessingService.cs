@@ -38,7 +38,7 @@ public class RoutineProcessingService: BackgroundService
 		
 		for (var i = 0; i < _options.ThreadCount; i++)
 		{
-			var readingTask = new Task(ReadAsync, TaskCreationOptions.LongRunning, stoppingToken);
+			var readingTask = new Task(ReadAsync, stoppingToken, TaskCreationOptions.LongRunning);
 			readingTasks.Add(readingTask);
 			readingTask.Start();
 		}

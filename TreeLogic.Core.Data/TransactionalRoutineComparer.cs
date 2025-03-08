@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Nikita Mulyukin <nmulyukin@gmail.com>
+   Copyright 2025 Nikita Mulyukin <nmulyukin@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,9 +14,17 @@
    limitations under the License.
 */
 
-namespace TreeLogic.Core.Abstractions;
+namespace TreeLogic.Core.Data;
 
-public interface ITransactionRoutineComparerProvider
+public class TransactionalRoutineComparer: IComparer<TransactionalRoutine>
 {
-	public IComparer<TransactionalRoutine> GetComparer(string transactionType);
+	public int Compare(TransactionalRoutine? x, TransactionalRoutine? y)
+	{
+		if (ReferenceEquals(x, y)) return 0;
+		if (y is null) return 1;
+		if (x is null) return -1;
+		//return string.Compare(x.TransactionType, y.TransactionType, StringComparison.Ordinal);
+
+		return 0;
+	}
 }

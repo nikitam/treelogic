@@ -25,12 +25,13 @@ public static class Module
 	{
 		serviceCollection.AddSingleton<IRoutineProvider, RoutineProvider>();
 		serviceCollection.AddSingleton<ITransactionProviderManager>(new TransactionProviderManager());
+		serviceCollection.AddSingleton<ITransactionalRoutineComparerManager>(new TransactionalRoutineComparerManager());
 
 		serviceCollection.AddSingleton<IRoutineManager>(sp =>
 		{
 			var routineProvider = sp.GetRequiredService<IRoutineProvider>();
-			var transactionProviderManager = sp.GetRequiredService<TransactionProviderManager>();
-			var transactionRoutineComparerProvider = sp.GetRequiredService<ITransactionRoutineComparerProvider>();
+			var transactionProviderManager = sp.GetRequiredService<ITransactionProviderManager>();
+			var transactionRoutineComparerProvider = sp.GetRequiredService<ITransactionalRoutineComparerManager>();
 			return new RoutineManager(routineProvider, transactionProviderManager, transactionRoutineComparerProvider);
 		});
 

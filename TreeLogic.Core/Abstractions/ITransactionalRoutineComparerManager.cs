@@ -14,19 +14,10 @@
    limitations under the License.
 */
 
-using Microsoft.Extensions.DependencyInjection;
-using TreeLogic.Core.Abstractions;
+namespace TreeLogic.Core.Abstractions;
 
-namespace TreeLogic.Core.Data.Postgres;
-
-public static class Module
+public interface ITransactionalRoutineComparerManager
 {
-	public static IServiceCollection WithPostgres(this IServiceCollection serviceCollection, string connectionString)
-	{
-		var sp = serviceCollection.BuildServiceProvider();
-		var tm = sp.GetService<ITransactionProviderManager>();
-		tm.RegisterTransactionProvider(DataRoutine.TransactionTypeConst, new PostgresTransactionProvider(connectionString));
-		
-		return serviceCollection;
-	}
+	void RegisterTransactionRoutineComparer(string transactionType, IComparer<TransactionalRoutine> comparer);
+	public IComparer<TransactionalRoutine> GetComparer(string transactionType);
 }

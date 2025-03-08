@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Nikita Mulyukin <nmulyukin@gmail.com>
+   Copyright 2025 Nikita Mulyukin <nmulyukin@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,27 +18,26 @@ using TreeLogic.Core.Abstractions;
 
 namespace TreeLogic.Core;
 
-public class TransactionProviderManager: ITransactionProviderManager
+public class TransactionalRoutineComparerManager: ITransactionalRoutineComparerManager
 {
-	private Dictionary<string, ITransactionProvider> _transactionProviders;
+	private Dictionary<string, IComparer<TransactionalRoutine>> _comparers;
 
-	public TransactionProviderManager()
+	public TransactionalRoutineComparerManager()
 	{
-		_transactionProviders = new Dictionary<string, ITransactionProvider>();
+		_comparers = new Dictionary<string, IComparer<TransactionalRoutine>>();
+	}
+	public void RegisterTransactionRoutineComparer(string transactionType, IComparer<TransactionalRoutine> comparer)
+	{
+		_comparers.Add(transactionType, comparer);
 	}
 
-	public void RegisterTransactionProvider(string transactionType, ITransactionProvider transactionProvider)
+	public IComparer<TransactionalRoutine> GetComparer(string transactionType)
 	{
-		_transactionProviders.Add(transactionType, transactionProvider);
-	}
-
-	public ITransactionProvider GetProvider(string transactionType)
-	{
-		if (_transactionProviders.TryGetValue(transactionType, out var provider))
+		if (_comparers.TryGetValue(transactionType, out var comparer))
 		{
-			return provider;
+			return comparer;
 		}
-
+		
 		return null;
 	}
 }

@@ -1,4 +1,6 @@
 using TreeLogic.Core;
+using TreeLogic.Core.Abstractions;
+using TreeLogic.Core.Data;
 using TreeLogic.Core.Data.Postgres;
 using TreeLogic.Core.Services;
 using TreeLogic.Processing;
@@ -9,10 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddTreeLogic().WithProcessing(new RoutineProcessingServiceOptions
-{
-	ThreadCount = 2
-}).WithPostgres("cs");
+builder.Services.AddTreeLogic()
+	.WithData()
+	.WithProcessing(new RoutineProcessingServiceOptions
+	{
+		ThreadCount = 2
+	})
+	.WithPostgres("cs");
 
 builder.Host.ConfigureServices(services =>
 {
@@ -48,7 +53,18 @@ app.MapGet("/weatherforecast", () =>
 	})
 	.WithName("GetWeatherForecast");
 
-app.MapPost("/exec", async context =>
+app.MapGet("/exec", async context =>
+{
+	var routineProvider = app.Services.GetService<IRoutineProvider>();
+	var echoRoutine = routineProvider.GetRoutine<EchoRoutine>("test");
+	
+	var writer = app.Services.GetService<RoutineProcessingWriter>();
+	writer.WriteRoutine(echoRoutine);
+	
+	await context.Response.WriteAsync("DONE");
+});
+
+app.MapPost("/query", async context =>
 {
 	await context.Response.WriteAsync("DONE");
 });
