@@ -1,5 +1,5 @@
-﻿/*
-   Copyright 2024 Nikita Mulyukin <nmulyukin@gmail.com>
+/*
+   Copyright 2025 Nikita Mulyukin <nmulyukin@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,27 +14,30 @@
    limitations under the License.
 */
 
-using Npgsql;
+using LinqToDB.Data;
 using TreeLogic.Core.Abstractions;
 
-namespace TreeLogic.Core.Data.Postgres;
+namespace TreeLogic.Core.Data.Linq2Db;
 
-public class PostgresTransaction: ITransaction
+public class Linq2DbTransaction: ITransaction
 {
-	private NpgsqlTransaction _internalTransaction;
+	private DataConnectionTransaction _internalTransaction;
 	
-	public PostgresTransaction(ITransactionEnvironment pte)
+	public Linq2DbTransaction(ITransactionEnvironment te)
 	{
-		Environment = pte;
+		Environment = te;
 	}
+	
+	public void Dispose()
+	{
+		_internalTransaction.Dispose();
+	}
+
 	public void Begin()
 	{
-		var te = Environment as PostgresTransactionEnvironment;
-
-		_internalTransaction = te.Connection.BeginTransaction();
+		var linq2DbEnv = Environment as Linq2DbTransactionEnvironment;
+		_internalTransaction = linq2DbEnv.BeginTransaction();
 	}
-	
-	public ITransactionEnvironment Environment { get; }
 
 	public void Commit()
 	{
@@ -45,9 +48,6 @@ public class PostgresTransaction: ITransaction
 	{
 		_internalTransaction.Rollback();
 	}
-	
-	public void Dispose()
-	{
-		_internalTransaction.Dispose();
-	}
+
+	public ITransactionEnvironment Environment { get; }
 }

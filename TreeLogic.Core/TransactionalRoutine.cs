@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using TreeLogic.Core.Abstractions;
+
 namespace TreeLogic.Core;
 
 public abstract class TransactionalRoutine: Routine
@@ -21,7 +23,7 @@ public abstract class TransactionalRoutine: Routine
 	public abstract string TransactionType { get; }
 	
 	// ITransaction as parameter?
-	public abstract void Execute();
+	public abstract void Execute(ITransactionEnvironment environment);
 
 	public override StageRoutineResult Prepare(RoutineEnvironment re)
 	{

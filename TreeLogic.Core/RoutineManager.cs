@@ -87,14 +87,14 @@ public class RoutineManager: IRoutineManager
 			var transactionEnvironment = transactionProvider.CreateTransactionEnvironment();
 			transactionEnvironment.OpenTransactionEnvironment();
 
-			var transaction = transactionProvider.CreateTransaction(pair.Key, transactionEnvironment);
+			var transaction = transactionProvider.CreateTransaction(transactionEnvironment);
 			
 			transaction.Begin();
 			transactionList.Add(transaction);
 
 			foreach (var transactionalRoutine in pair.Value)
 			{
-				transactionalRoutine.Execute();
+				transactionalRoutine.Execute(transactionEnvironment);
 			}
 		}
 

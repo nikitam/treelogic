@@ -20,5 +20,5 @@ public interface ITransactionProvider
 {
 	ITransactionEnvironment CreateTransactionEnvironment();
 	
-	ITransaction CreateTransaction(string transactionType, ITransactionEnvironment transactionEnvironment);
+	ITransaction CreateTransaction(ITransactionEnvironment transactionEnvironment);
 }

@@ -3,4 +3,7 @@
 GET {{TreeLogic.Processing_HostAddress}}/weatherforecast/
 Accept: application/json
 
+GET {{TreeLogic.Processing_HostAddress}}/weatherforecast/
+Accept: application/json
+
 ###

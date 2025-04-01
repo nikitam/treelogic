@@ -10,6 +10,9 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.3.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.3.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -19,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TreeLogic.Core.Data.Linq2Db\TreeLogic.Core.Data.Linq2Db.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data.Postgres\TreeLogic.Core.Data.Postgres.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data\TreeLogic.Core.Data.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Logging.Serilog\TreeLogic.Core.Logging.Serilog.csproj" />

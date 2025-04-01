@@ -48,13 +48,20 @@ public class RoutineProcessingService: BackgroundService
 
 	private async void ReadAsync(object o)
 	{
-		var cc = (CancellationToken)o;
-		while (await _channelProvider.ProcessingChannel.Reader.WaitToReadAsync(cc))
+		try
 		{
-			while (_channelProvider.ProcessingChannel.Reader.TryRead(out var routine))
+			var cc = (CancellationToken)o;
+			while (!cc.IsCancellationRequested && await _channelProvider.ProcessingChannel.Reader.WaitToReadAsync(cc))
 			{
-				_routineManager.Go(routine);
+				while (!cc.IsCancellationRequested && _channelProvider.ProcessingChannel.Reader.TryRead(out var routine))
+				{
+					_routineManager.Go(routine);
+				}
 			}
+		}
+		catch (OperationCanceledException ex)
+		{
+			//
 		}
 	}
 }

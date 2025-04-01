@@ -14,9 +14,21 @@
    limitations under the License.
 */
 
-namespace TreeLogic.Core.Data.LowLevelProcesses;
+using LinqToDB.Data;
 
-public abstract class InsertDataObjectRoutine: DataRoutine
+namespace TreeLogic.Core.Data.Linq2Db;
+
+public class Linq2DbDataConnectionProvider
 {
+	private readonly Func<DataConnection> _factory;
+	
+	public Linq2DbDataConnectionProvider(Func<DataConnection> factory)
+	{
+		_factory = factory;
+	}
 
+	public DataConnection GetConnection()
+	{
+		return _factory();
+	}
 }

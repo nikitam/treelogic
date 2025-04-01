@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Nikita Mulyukin <nmulyukin@gmail.com>
+   Copyright 2025 Nikita Mulyukin <nmulyukin@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,24 +14,26 @@
    limitations under the License.
 */
 
+using LinqToDB.Data;
 using TreeLogic.Core.Abstractions;
 
-namespace TreeLogic.Core.Data.Postgres;
+namespace TreeLogic.Core.Data.Linq2Db;
 
-public class PostgresTransactionProvider: ITransactionProvider
+public class Linq2DbTransactionProvider: ITransactionProvider
 {
-	private readonly string _connectionString;
-	public PostgresTransactionProvider(string cs)
+	private Linq2DbDataConnectionProvider _connectionProvider;
+	
+	public Linq2DbTransactionProvider(Linq2DbDataConnectionProvider cp)
 	{
-		_connectionString = cs;
+		_connectionProvider = cp;
 	}
 	public ITransactionEnvironment CreateTransactionEnvironment()
 	{
-		return new PostgresTransactionEnvironment(_connectionString);
+		return new Linq2DbTransactionEnvironment(_connectionProvider.GetConnection());
 	}
 
 	public ITransaction CreateTransaction(ITransactionEnvironment transactionEnvironment)
 	{
-		return new PostgresTransaction(transactionEnvironment);
+		return new Linq2DbTransaction(transactionEnvironment);
 	}
 }
