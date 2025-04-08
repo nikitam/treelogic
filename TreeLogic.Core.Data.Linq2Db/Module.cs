@@ -28,7 +28,7 @@ public static class Module
 	{
 		var connectionProvider = new Linq2DbDataConnectionProvider(factory);
 		serviceCollection.AddSingleton(connectionProvider);
-		//serviceCollection.AddTransient<QueryDataObjectRoutine, Linq2DbQueryDataObjectRoutine>();
+		serviceCollection.AddTransient(typeof(QueryDataObjectRoutine<>), typeof(Linq2DbQueryDataObjectRoutine<>));
 		
 		var sp = serviceCollection.BuildServiceProvider();
 		var tm = sp.GetService<ITransactionProviderManager>();

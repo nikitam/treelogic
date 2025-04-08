@@ -14,13 +14,11 @@
    limitations under the License.
 */
 
-using System.Collections;
 using LinqToDB;
-using LinqToDB.Data;
 
 namespace TreeLogic.Core.Data.Linq2Db;
 
-public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine where T: class, IDataObject
+public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine<T> where T : class //where T: class, IDataObject
 {
 	private readonly Linq2DbDataConnectionProvider _connectionProvider;
 	
@@ -28,6 +26,7 @@ public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine where T: 
 	{
 		_connectionProvider = cp;
 	}
+	
 	public override StageRoutineResult Prepare(RoutineEnvironment re)
 	{
 		try
@@ -40,20 +39,25 @@ public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine where T: 
 				throw new Exception("Query is not Func<IQueryable<T>, IQueryable<T>>");
 			}
 			
+			//var delegateType = query.GetType();
+			//var entityType = GetGenericParameterFromDelegate(delegateType);
+			
 			using (var connection = _connectionProvider.GetConnection())
 			{
-				var fullQuery = query(connection.GetTable<T>());
+				IQueryable<T> queryable = connection.GetTable<T>();
+				var fullQuery = query(queryable);
 				result = fullQuery.ToList();
 			}
-			
-			
+
+
 			/*Func<IQueryable<DataConnection>, IQueryable<DataConnection>> queryd = x =>
 				x.Where(y => y.CommandTimeout == 5).LoadWith(x => x.DataProvider)
-					.ThenLoad(x => x.Name)
+					.ThenLoad(x => x.Name);
 
 
 			var p = new RoutineProvider(null);
-			p.GetRoutine<QueryDataObjectRoutine<DataConnection>>(queryd);*/
+			var r = p.GetGenericRoutine<QueryDataObjectRoutine<DataConnection>, DataConnection>(queryd);*/
+			
 			
 			return new StageRoutineResult
 			{

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
@@ -22,6 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TestDomain.Linq2Db\TestDomain.Linq2Db.csproj" />
+      <ProjectReference Include="..\TestDomain\TestDomain.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data.Linq2Db\TreeLogic.Core.Data.Linq2Db.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data.Postgres\TreeLogic.Core.Data.Postgres.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data\TreeLogic.Core.Data.csproj" />

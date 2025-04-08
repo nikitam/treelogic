@@ -1,6 +1,6 @@
 namespace TreeLogic.Core.Data;
 
-public abstract class QueryDataObjectRoutine: Routine
+public abstract class QueryDataObjectRoutine<T>: Routine
 {
 
 }

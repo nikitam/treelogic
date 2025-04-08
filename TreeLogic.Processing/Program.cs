@@ -4,6 +4,8 @@ using LinqToDB.DataProvider.PostgreSQL;
 using LinqToDB.Mapping;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using TestDomain;
+using TestDomain.Linq2Db;
 using TreeLogic.Core;
 using TreeLogic.Core.Abstractions;
 using TreeLogic.Core.Data;
@@ -37,14 +39,15 @@ builder.Services.AddSwaggerGen(c =>
 	});
 });
 
+MapDomain.Map();
 
 builder.Services.AddTreeLogic()
 	.WithData()
 	.WithProcessing(new RoutineProcessingServiceOptions
 	{
-		ThreadCount = 2
+		ThreadCount = 1
 	})
-	.WithLinq2Db(() => new DataConnection(LinqToDB.ProviderName.PostgreSQL, "cs", MappingSchema.Default));
+	.WithLinq2Db(() => new DataConnection(ProviderName.PostgreSQL, "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=sa;", MapDomain.MappingSchema));
 	//.WithPostgres("cs");
 
 builder.Host.ConfigureServices(services =>
@@ -64,44 +67,30 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-	"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-	{
-		var forecast = Enumerable.Range(1, 5).Select(index =>
-				new WeatherForecast
-				(
-					DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-					Random.Shared.Next(-20, 55),
-					summaries[Random.Shared.Next(summaries.Length)]
-				))
-			.ToArray();
-		return forecast;
-	})
-	.WithName("GetWeatherForecast");
-
 app.MapGet("/exec", async context =>
 {
-	var routineProvider = app.Services.GetService<IRoutineProvider>();
-	var echoRoutine = routineProvider.GetRoutine<ComplexRoutine>(null);
-	
 	var writer = app.Services.GetService<RoutineProcessingWriter>();
-	writer.WriteRoutine(echoRoutine);
+	var routineProvider = app.Services.GetService<IRoutineProvider>();
+
+	Func<IQueryable<USER>, IQueryable<USER>> query = (users) => users.Where(x => x.Age > 25);
+
+	var r = routineProvider.GetRoutine<QueryDataObjectRoutine<USER>>(query);
+	writer.WriteRoutine(r);
 	
 	await context.Response.WriteAsync("DONE");
 });
 
-app.MapPost("/query", async context =>
+app.MapGet("/query", async context =>
 {
+	var writer = app.Services.GetService<RoutineProcessingWriter>();
+	var routineProvider = app.Services.GetService<IRoutineProvider>();
+
+	Func<IQueryable<USER>, IQueryable<USER>> query = (users) => users.Where(x => x.Age > 25);
+
+	var r = routineProvider.GetRoutine<QueryDataObjectRoutine<USER>>(query);
+	writer.WriteRoutine(r);
+	
 	await context.Response.WriteAsync("DONE");
 });
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-	public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -6,4 +6,8 @@
         <Nullable>disable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TreeLogic.Core.Data\TreeLogic.Core.Data.csproj" />
+    </ItemGroup>
+
 </Project>
