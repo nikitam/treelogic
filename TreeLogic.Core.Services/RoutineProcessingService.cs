@@ -55,7 +55,21 @@ public class RoutineProcessingService: BackgroundService
 			{
 				while (!cc.IsCancellationRequested && _channelProvider.ProcessingChannel.Reader.TryRead(out var routine))
 				{
-					_routineManager.Go(routine);
+					if (routine.Tcs != null)
+					{
+						var result = _routineManager.Go(routine);
+
+						var item = routine;
+						Task.Run(() =>
+						{
+							item.Code(result.PrepareResult);
+							item.Tcs.SetResult(true);
+						});
+					}
+					else
+					{
+						_routineManager.Go(routine);
+					}
 				}
 			}
 		}

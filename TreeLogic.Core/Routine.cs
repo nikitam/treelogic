@@ -49,4 +49,8 @@ public abstract class Routine
 	public abstract StageRoutineResult Prepare(RoutineEnvironment re);
 
 	public object RoutineOperand { get; internal set; }
+	
+	
+	public TaskCompletionSource<bool> Tcs { get; set; }
+	public Func<StageRoutineResult, Task> Code { get; set; }
 }

@@ -29,4 +29,13 @@ public class RoutineProcessingWriter
 	{
 		_channelProvider.ProcessingChannel.Writer.TryWrite(routine);
 	}
+
+	public Task WriteRoutineAsync(Routine routine, Func<StageRoutineResult, Task> code)
+	{
+		var tcs = new TaskCompletionSource<bool>();
+		routine.Code = code;
+		routine.Tcs = tcs;
+		_channelProvider.ProcessingChannel.Writer.TryWrite(routine);
+		return tcs.Task;
+	}
 }

@@ -75,9 +75,26 @@ app.MapGet("/exec", async context =>
 	Func<IQueryable<USER>, IQueryable<USER>> query = (users) => users.Where(x => x.Age > 25);
 
 	var r = routineProvider.GetRoutine<QueryDataObjectRoutine<USER>>(query);
-	writer.WriteRoutine(r);
+
+
+	var afterExecute = async (StageRoutineResult result) =>
+	{
+		var users = result.Result as List<USER>;
+		if (users != null)
+		{
+			await context.Response.WriteAsync("USERS COUNT: " + users.Count);
+		}
+		else
+		{
+			await context.Response.WriteAsync("ERROR");
+		}
+	};
 	
-	await context.Response.WriteAsync("DONE");
+	// writer.WriteRoutine(r);
+	
+	var task = writer.WriteRoutineAsync(r, afterExecute);
+	
+	await task;
 });
 
 app.MapGet("/query", async context =>
