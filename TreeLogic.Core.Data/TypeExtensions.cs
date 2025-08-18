@@ -22,6 +22,6 @@ public static class TypeExtensions
 {
     public static bool IsDataObject(this Type t)
     {
-        return t.IsAssignableTo(typeof(IDataObject));
+        return t.IsAssignableTo(typeof(DataObject));
     }
 }

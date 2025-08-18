@@ -46,12 +46,8 @@ public class RoutineManager: IRoutineManager
 		var routineResult = new RoutineResult();
 		var routineEnvironment = new RoutineEnvironment(routine);
 		
-		// привнесение дополнительной функциональности через модель middleware asp.net
-		
-		// Prepare Phase
 		DoPrepare(routine, routineEnvironment, routineResult);
 		
-		// Execute Phase
 		DoExecute(routineEnvironment, routineResult);
 
 		return routineResult;

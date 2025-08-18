@@ -27,15 +27,22 @@ public class RoutineProcessingWriter
 	
 	public void WriteRoutine(Routine routine)
 	{
-		_channelProvider.ProcessingChannel.Writer.TryWrite(routine);
+		_channelProvider.ProcessingChannel.Writer.TryWrite(new RoutineProcessingItem
+		{
+			Routine = routine
+		});
 	}
 
 	public Task WriteRoutineAsync(Routine routine, Func<StageRoutineResult, Task> code)
 	{
-		var tcs = new TaskCompletionSource<bool>();
-		routine.Code = code;
-		routine.Tcs = tcs;
-		_channelProvider.ProcessingChannel.Writer.TryWrite(routine);
-		return tcs.Task;
+		var rpi = new RoutineProcessingItem
+		{
+			Routine = routine,
+			Code = code,
+			TaskCompletionSource = new TaskCompletionSource<bool>()
+		};
+		
+		_channelProvider.ProcessingChannel.Writer.TryWrite(rpi);
+		return rpi.TaskCompletionSource.Task;
 	}
 }

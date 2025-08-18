@@ -53,22 +53,23 @@ public class RoutineProcessingService: BackgroundService
 			var cc = (CancellationToken)o;
 			while (!cc.IsCancellationRequested && await _channelProvider.ProcessingChannel.Reader.WaitToReadAsync(cc))
 			{
-				while (!cc.IsCancellationRequested && _channelProvider.ProcessingChannel.Reader.TryRead(out var routine))
+				while (!cc.IsCancellationRequested && _channelProvider.ProcessingChannel.Reader.TryRead(out var routineProcessingItem))
 				{
-					if (routine.Tcs != null)
+					if (routineProcessingItem.TaskCompletionSource != null)
 					{
-						var result = _routineManager.Go(routine);
+						var result = _routineManager.Go(routineProcessingItem.Routine);
 
-						var item = routine;
+						var cloneItem = routineProcessingItem;
+
 						Task.Run(() =>
 						{
-							item.Code(result.PrepareResult);
-							item.Tcs.SetResult(true);
+							cloneItem.Code(result.PrepareResult);
+							cloneItem.TaskCompletionSource.SetResult(true);
 						});
 					}
 					else
 					{
-						_routineManager.Go(routine);
+						_routineManager.Go(routineProcessingItem.Routine);
 					}
 				}
 			}

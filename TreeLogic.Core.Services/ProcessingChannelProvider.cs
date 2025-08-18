@@ -4,11 +4,11 @@ namespace TreeLogic.Core.Services;
 
 public class ProcessingChannelProvider
 {
-	private readonly Channel<Routine> _channel;
+	private readonly Channel<RoutineProcessingItem> _channel;
 
 	public ProcessingChannelProvider()
 	{
-		_channel = Channel.CreateUnbounded<Routine>(new UnboundedChannelOptions
+		_channel = Channel.CreateUnbounded<RoutineProcessingItem>(new UnboundedChannelOptions
 		{
 			SingleReader = false,
 			SingleWriter = false,
@@ -16,5 +16,5 @@ public class ProcessingChannelProvider
 		});
 	}
 	
-	internal Channel<Routine> ProcessingChannel => _channel;
+	internal Channel<RoutineProcessingItem> ProcessingChannel => _channel;
 }

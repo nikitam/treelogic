@@ -3,9 +3,10 @@ using System.Reflection;
 
 namespace TreeLogic.Core.Data.Tests;
 
-public class User : IDataObject
+public class User : DataObject
 {
-    public bool IsNew => throw new NotImplementedException();
+    public bool IsNew { get; set; }
+
 
     public string FirstName {get;set;}
 
@@ -14,18 +15,18 @@ public class User : IDataObject
     public Tenant Tenant {get;set;}
 }
 
-public class Role : IDataObject
+public class Role : DataObject
 {
-    public bool IsNew => throw new NotImplementedException();
+    public bool IsNew { get; set; }
 
     public string RoleName {get;set;}
     
     public List<Tenant> Tenants {get;set;}
 }
 
-public class Tenant : IDataObject
+public class Tenant : DataObject
 {
-    public bool IsNew => throw new NotImplementedException();
+    public bool IsNew { get; set; }
     
     public string TenantName {get;set;}
     

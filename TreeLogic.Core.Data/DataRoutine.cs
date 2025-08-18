@@ -10,7 +10,7 @@ public abstract class DataRoutine: TransactionalRoutine
 
 	public override StageRoutineResult Prepare(RoutineEnvironment re)
 	{
-		if (RoutineOperand is not IDataObject)
+		if (RoutineOperand is not DataObject)
 		{
 			throw new InvalidDataException("The DataRoutine operand is not an IDataObject");
 		}

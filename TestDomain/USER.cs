@@ -2,7 +2,7 @@
 
 namespace TestDomain;
 
-public class USER: IDataObject
+public class USER: DataObject
 {
 	public long Id { get; set; }
 	

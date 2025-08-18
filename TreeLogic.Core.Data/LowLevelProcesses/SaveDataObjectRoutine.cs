@@ -28,7 +28,7 @@ public class SaveDataObjectRoutine: Routine
 	}
 	public override StageRoutineResult Prepare(RoutineEnvironment re)
 	{
-		var dataObject = RoutineOperand as IDataObject;
+		var dataObject = RoutineOperand as DataObject;
 		
 		if (dataObject == null)
 		{
@@ -43,6 +43,8 @@ public class SaveDataObjectRoutine: Routine
 		{
 			AddChildRoutine(_routineProvider.GetRoutine<UpdateDataObjectRoutine>(dataObject), re);
 		}
+		
+		// recursive walk hierarchy
 
 		return null;
 	}

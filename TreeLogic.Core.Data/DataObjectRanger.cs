@@ -21,7 +21,7 @@ namespace TreeLogic.Core.Data;
 public interface IDataObjectRanger
 {
     int GetDataObjectLevel(Type dataObjectType);
-    int GetDataObjectLevel<T>(T dataObject) where T: IDataObject;
+    int GetDataObjectLevel<T>(T dataObject) where T: DataObject;
 }
 
 public class DataObjectRanger : IDataObjectRanger
@@ -70,7 +70,7 @@ public class DataObjectRanger : IDataObjectRanger
         return _dataObjectLevels.GetValueOrDefault(dataObjectType, -1);
     }
 
-    public int GetDataObjectLevel<T>(T dataObject) where T : IDataObject
+    public int GetDataObjectLevel<T>(T dataObject) where T : DataObject
     {
         return GetDataObjectLevel(typeof(T));
     }

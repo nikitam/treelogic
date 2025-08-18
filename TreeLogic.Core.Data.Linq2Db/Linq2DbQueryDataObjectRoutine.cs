@@ -18,7 +18,7 @@ using LinqToDB;
 
 namespace TreeLogic.Core.Data.Linq2Db;
 
-public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine<T> where T : class //where T: class, IDataObject
+public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine<T> where T : DataObject
 {
 	private readonly Linq2DbDataConnectionProvider _connectionProvider;
 	
@@ -26,50 +26,25 @@ public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine<T> where 
 	{
 		_connectionProvider = cp;
 	}
-	
-	public override StageRoutineResult Prepare(RoutineEnvironment re)
+
+
+	protected override List<T> InternalGetDataObjects()
 	{
-		try
+		List<T> result = null;
+			
+		var query = this.RoutineOperand as Func<IQueryable<T>, IQueryable<T>>;
+		if (query == null)
 		{
-			List<T> result = null;
-			
-			var query = this.RoutineOperand as Func<IQueryable<T>, IQueryable<T>>;
-			if (query == null)
-			{
-				throw new Exception("Query is not Func<IQueryable<T>, IQueryable<T>>");
-			}
-			
-			//var delegateType = query.GetType();
-			//var entityType = GetGenericParameterFromDelegate(delegateType);
-			
-			using (var connection = _connectionProvider.GetConnection())
-			{
-				IQueryable<T> queryable = connection.GetTable<T>();
-				var fullQuery = query(queryable);
-				result = fullQuery.ToList();
-			}
-
-
-			/*Func<IQueryable<DataConnection>, IQueryable<DataConnection>> queryd = x =>
-				x.Where(y => y.CommandTimeout == 5).LoadWith(x => x.DataProvider)
-					.ThenLoad(x => x.Name);
-
-
-			var p = new RoutineProvider(null);
-			var r = p.GetGenericRoutine<QueryDataObjectRoutine<DataConnection>, DataConnection>(queryd);*/
-			
-			
-			return new StageRoutineResult
-			{
-				Result = result
-			};
+			throw new Exception("Query is not Func<IQueryable<T>, IQueryable<T>>");
 		}
-		catch (Exception ex)
+			
+		using (var connection = _connectionProvider.GetConnection())
 		{
-			return new StageRoutineResult()
-			{
-				Exception = ex,
-			};
+			IQueryable<T> queryable = connection.GetTable<T>();
+			var fullQuery = query(queryable);
+			result = fullQuery.ToList();
 		}
+
+		return result;
 	}
 }
