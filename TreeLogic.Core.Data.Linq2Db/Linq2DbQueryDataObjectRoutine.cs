@@ -22,15 +22,15 @@ public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine<T> where 
 {
 	private readonly Linq2DbDataConnectionProvider _connectionProvider;
 	
-	public Linq2DbQueryDataObjectRoutine(Linq2DbDataConnectionProvider cp)
+	public Linq2DbQueryDataObjectRoutine(Linq2DbDataConnectionProvider cp, DataObjectHierarchyWalker hw) : base(hw)
 	{
 		_connectionProvider = cp;
 	}
 
 
-	protected override List<T> InternalGetDataObjects()
+	protected override HashSet<T> InternalGetDataObjects()
 	{
-		List<T> result = null;
+		HashSet<T> result = null;
 			
 		var query = this.RoutineOperand as Func<IQueryable<T>, IQueryable<T>>;
 		if (query == null)
@@ -42,7 +42,7 @@ public  class Linq2DbQueryDataObjectRoutine<T>: QueryDataObjectRoutine<T> where 
 		{
 			IQueryable<T> queryable = connection.GetTable<T>();
 			var fullQuery = query(queryable);
-			result = fullQuery.ToList();
+			result = fullQuery.ToHashSet();
 		}
 
 		return result;

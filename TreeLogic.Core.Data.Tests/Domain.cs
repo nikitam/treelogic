@@ -64,7 +64,7 @@ public class Tenant : DataObject
 
     public override List<IEnumerable<DataObject>> GetChildren()
     {
-        throw new NotImplementedException();
+        return null;
     }
 
     public string TenantName {get;set;}
