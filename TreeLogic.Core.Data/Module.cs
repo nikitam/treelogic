@@ -26,6 +26,8 @@ public static class Module
 		var sp = serviceCollection.BuildServiceProvider();
 		var comparerManager = sp.GetService<ITransactionalRoutineComparerManager>();
 		comparerManager.RegisterTransactionRoutineComparer(DataRoutine.TransactionTypeConst, new TransactionalRoutineComparer());
+
+		serviceCollection.AddSingleton<DataObjectHierarchyWalker>();
 		
 		return serviceCollection;
 	}

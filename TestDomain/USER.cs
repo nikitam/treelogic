@@ -16,4 +16,14 @@ public class USER: DataObject
 	{
 		get { return Id > 0; }
 	}
+
+	public override List<DataObject> GetParents()
+	{
+		return null;
+	}
+
+	public override List<IEnumerable<DataObject>> GetChildren()
+	{
+		return null;
+	}
 }
