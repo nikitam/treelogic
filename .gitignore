@@ -32,3 +32,4 @@ _ReSharper*/
 packages/
 VivavoWeb/node_modules
 .idea/
+.DS_Store
