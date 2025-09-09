@@ -11,6 +11,8 @@ public abstract class QueryDataObjectRoutine<T>: Routine where T: DataObject
 		// recursive walk hierarchy
 		// result.ForEach(x => x.IsNew = false);
 		
+		
+		
 		return new StageRoutineResult
 		{
 			Result = result

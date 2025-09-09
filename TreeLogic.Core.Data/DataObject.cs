@@ -19,4 +19,8 @@ namespace TreeLogic.Core.Data;
 public abstract class DataObject
 {
     public bool IsNew { get; internal set; }
+
+    public abstract List<DataObject> GetParents();
+    
+    public abstract List<IEnumerable<DataObject>> GetChildren();
 }
