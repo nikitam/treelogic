@@ -1,3 +1,5 @@
+using Shouldly;
+
 namespace TreeLogic.Core.Data.Tests;
 
 public class DataObjectRangerTests
@@ -16,9 +18,13 @@ public class DataObjectRangerTests
         var userLevel = dos.GetDataObjectLevel(typeof(User));
         var roleLevel = dos.GetDataObjectLevel(typeof(Role));
         var tenantLevel = dos.GetDataObjectLevel(typeof(Tenant));
+        
+        tenantLevel.ShouldBe(2);
+        userLevel.ShouldBe(3);
+        roleLevel.ShouldBe(1);
 
-        Assert.IsTrue(tenantLevel == 2);
-        Assert.IsTrue(userLevel == 3);
-        Assert.IsTrue(roleLevel == 1);
+        //Assert.IsTrue(tenantLevel == 2);
+        //Assert.IsTrue(userLevel == 3);
+        //Assert.IsTrue(roleLevel == 1);
     }
 }

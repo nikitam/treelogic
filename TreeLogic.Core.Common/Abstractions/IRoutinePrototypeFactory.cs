@@ -1,5 +1,5 @@
-﻿/*
-   Copyright 2025 Nikita Mulyukin <nmulyukin@gmail.com>
+/*
+   Copyright 2026 Nikita Mulyukin <nmulyukin@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,11 +14,9 @@
    limitations under the License.
 */
 
-namespace TreeLogic.Core.Common;
+namespace TreeLogic.Core.Common.Abstractions;
 
-public abstract class RoutinePrototype
+public interface IRoutinePrototypeFactory
 {
-	public string Name { get; set; }
-	
-	public abstract Routine BuildRoutine();
+    Task<RoutinePrototype> GetRoutinePrototypeAsync(Stream routineStream);
 }

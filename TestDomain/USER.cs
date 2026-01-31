@@ -11,6 +11,8 @@ public class USER: DataObject
 	public string LastName { get; set; }
 	
 	public int Age { get; set; }
+	
+	public HashSet<ADDRESS> Addresses { get; set; }
 
 	public bool IsNew
 	{
@@ -24,6 +26,6 @@ public class USER: DataObject
 
 	public override List<IEnumerable<DataObject>> GetChildren()
 	{
-		return null;
+		return new List<IEnumerable<DataObject>> { Addresses };
 	}
 }

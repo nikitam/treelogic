@@ -19,6 +19,8 @@ namespace TreeLogic.Core.Abstractions;
 public interface IRoutineProvider
 {
 	T GetRoutine<T>(object routineOperand) where T : Routine;
+	
+	Routine GetRoutine(Type routineType, object routineOperand);
 
 	//T GetGenericRoutine<T, T1>(object routineOperand) where T : Routine;
 }

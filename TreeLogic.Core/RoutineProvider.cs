@@ -35,6 +35,18 @@ public class RoutineProvider: IRoutineProvider
 		return routine;
 	}
 
+	public Routine GetRoutine(Type routineType, object routineOperand)
+	{
+		if (!routineType.IsRoutine())
+		{
+			return null;
+		}
+		
+		var routine = (Routine)ActivatorUtilities.GetServiceOrCreateInstance(_serviceProvider, routineType);
+		routine.RoutineOperand = routineOperand;
+		return routine;
+	}
+
 	/*public T GetGenericRoutine<T>(object routineOperand) where T : Routine
 	{
 		//var genericType = typeof(T).MakeGenericType(typeof(T1));

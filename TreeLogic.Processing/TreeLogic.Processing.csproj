@@ -24,6 +24,7 @@
     <ItemGroup>
       <ProjectReference Include="..\TestDomain.Linq2Db\TestDomain.Linq2Db.csproj" />
       <ProjectReference Include="..\TestDomain\TestDomain.csproj" />
+      <ProjectReference Include="..\TreeLogic.Core.Common\TreeLogic.Core.Common.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data.Linq2Db\TreeLogic.Core.Data.Linq2Db.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data.Postgres\TreeLogic.Core.Data.Postgres.csproj" />
       <ProjectReference Include="..\TreeLogic.Core.Data\TreeLogic.Core.Data.csproj" />

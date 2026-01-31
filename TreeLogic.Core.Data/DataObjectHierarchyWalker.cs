@@ -80,9 +80,12 @@ public class DataObjectHierarchyWalker
             direction == WalkDirection.Both)
         {
             var parents = current.GetParents();
-            foreach (var parent in parents)
+            if (parents != null)
             {
-                WalkRecursive(parent, action, visitedObjects, direction);
+                foreach (var parent in parents)
+                {
+                    WalkRecursive(parent, action, visitedObjects, direction);
+                }
             }
         }
     }

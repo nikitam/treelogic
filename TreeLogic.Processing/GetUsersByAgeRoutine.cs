@@ -1,6 +1,5 @@
 using TestDomain;
 using TreeLogic.Core;
-using TreeLogic.Core.Abstractions;
 using TreeLogic.Core.Data;
 
 namespace TreeLogic.Processing;
@@ -21,5 +20,10 @@ public class GetUsersByAgeRoutine: Routine
 		var result = _routineManager.Go<QueryDataObjectRoutine<USER>>(query);
 
 		return result.PrepareResult;
+	}
+
+	public override void FillByPrototype(RoutinePrototype prototype)
+	{
+		RoutineOperand = int.Parse(prototype.Parameters.Single(x => x.Name == "RoutineOperand").Value);
 	}
 }

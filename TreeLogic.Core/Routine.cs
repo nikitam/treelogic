@@ -48,5 +48,10 @@ public abstract class Routine
 
 	public abstract StageRoutineResult Prepare(RoutineEnvironment re);
 
-	public object RoutineOperand { get; internal set; }
+	public object RoutineOperand { get; set; }
+
+	public virtual void FillByPrototype(RoutinePrototype prototype)
+	{
+		
+	}
 }
